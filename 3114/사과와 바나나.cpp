@@ -12,11 +12,11 @@ struct Info {
 	int num;
 };
 
-Info map[1502][1502];
+Info map[1501][1501];
 // 사과면 0, 바나나면 1
-int prefixMap[2][1502][1502];
+int prefixMap[2][1501][1501];
 // [A][B]: (A, B)칸까지 불도저가 밀었을 때 사과와 바나나의 최대 합
-int dp[1502][1502];
+int dp[1501][1501];
 
 int main() {
 	ios_base::sync_with_stdio(0);
