@@ -41,7 +41,6 @@ int main() {
 	while (!q.empty()) {
 		auto front = q.front();
 		q.pop();
-		//cout << front.y << " " << front.x << " " << front.brokeWall << endl;
 
 		// (N, M) 위치에 도착하면 최단 경로 업데이트
 		if (front.y == n - 1 && front.x == m - 1)
