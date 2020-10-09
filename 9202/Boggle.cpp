@@ -1,41 +1,41 @@
-#include <iostream>
+#include <algorithm>
 #include <cstring>
+#include <iostream>
+#include <set>
 #include <string>
 #include <vector>
-#include <set>
-#include <algorithm>
 #define LEN 26
 #define endl '\n'
 using namespace std;
 
 struct Trie {
-    bool isFinished;
-    Trie* next[LEN];
-    Trie() : isFinished(false) {
-        memset(next, 0, sizeof(next));
-    }
+	bool isFinished;
+	Trie *next[LEN];
+	Trie() : isFinished(false) {
+		memset(next, 0, sizeof(next));
+	}
 	~Trie() {
 		for (int i = 0; i < LEN; i++) {
-			if (next[i]) delete(next[i]);
+			if (next[i]) delete (next[i]);
 		}
 	}
-    void insert(const char* key) {
-        if (!*key) isFinished = true;
-        else {
-            int curr = *key - 'A';
-            if (!next[curr]) next[curr] = new Trie();
-            next[curr]->insert(key + 1);
-        }
-    }
-    int find(const char* key) {
+	void insert(const char *key) {
+		if (!*key) isFinished = true;
+		else {
+			int curr = *key - 'A';
+			if (!next[curr]) next[curr] = new Trie();
+			next[curr]->insert(key + 1);
+		}
+	}
+	int find(const char *key) {
 		if (!*key && isFinished) return 2;
-        if (!*key) return 1;
+		if (!*key) return 1;
 
-        int curr = *key - 'A';
+		int curr = *key - 'A';
 		if (!next[curr]) return 0;
-		
-        return next[curr]->find(key + 1);
-    }
+
+		return next[curr]->find(key + 1);
+	}
 	int count() {
 		int found = 0;
 		for (int i = 0; i < LEN; i++) {
@@ -47,7 +47,7 @@ struct Trie {
 
 int dx[] = {-1, 0, 1, -1, 1, -1, 0, 1};
 int dy[] = {-1, -1, -1, 0, 0, 1, 1, 1};
-Trie* root = nullptr;
+Trie *root = nullptr;
 bool visited[4][4];
 string findWord;
 set<string> boggle;
@@ -108,7 +108,7 @@ int main() {
 				findWord.pop_back();
 			}
 		}
-		
+
 		int sum = 0;
 		int maxLen = -1;
 		auto maxIt = boggle.cbegin();
