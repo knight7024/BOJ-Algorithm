@@ -45,7 +45,8 @@ LL bfs(int start) {
 	pq.emplace(0, start);
 	
 	LL minCost[2501];
-    memset(minCost, INF, sizeof(minCost));
+	memset(minCost, INF, sizeof(minCost));
+	minCost[start] = 0;
 
 	while (!pq.empty()) {
 		auto front = pq.top();
