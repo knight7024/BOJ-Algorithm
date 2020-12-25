@@ -26,7 +26,7 @@ int main() {
 			endLiquid = liquid[end];
 			gap = abs(endLiquid + startLiquid);
 		}
-		if (end > 0 && abs(liquid[end - 1] + liquid[start]) < abs(liquid[end] + liquid[start])) {
+		if (end > mid && abs(liquid[end - 1] + liquid[start]) < abs(liquid[end] + liquid[start])) {
 			end--;
 			continue;
 		}
