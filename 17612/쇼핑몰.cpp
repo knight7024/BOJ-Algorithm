@@ -20,13 +20,6 @@ struct cmpC {
 	}
 };
 
-// struct cmpL {
-// 	bool operator()(pair<int, int> a, pair<int, int> b) {
-// 		if (a.w == b.w) return a.counterNum < b.counterNum;
-// 		return a.w > b.w;
-// 	}
-// };
-
 int main()
 {
 	ios_base::sync_with_stdio(0);
