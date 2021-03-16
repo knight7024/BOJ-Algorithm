@@ -19,19 +19,16 @@ int main() {
 	cin >> n >> m;
 
 	vector<long> a(n);
+	vector<pair<long, int>> rest(n);
 	for (int i = 0; i < n; i++) {
 		cin >> a[i];
+		rest[i].first = a[i] % GAME;
+		rest[i].second = i;
 	}
 
 	vector<long> b(m);
 	for (int i = 0; i < m; i++) {
 		cin >> b[i];
-	}
-
-	vector<pair<long, int>> rest(n);
-	for (int i = 0; i < n; i++) {
-		rest[i].first = a[i] % GAME;
-		rest[i].second = i;
 	}
 
 	sort(rest.begin(), rest.end());
@@ -52,6 +49,7 @@ int main() {
 			continue;
 		}
 		countSum += to - from;
+		checked[sum % GAME] = true;
 		for (auto i = from; i < to; i++) removed[(*i).second] = true;
 	}
 
