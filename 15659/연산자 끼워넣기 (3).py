@@ -13,7 +13,7 @@ def calc(eq):
 	return int(eval(''.join(stack)))
 
 def backtracking(idx):
-	global eq, opsCnt, maxResult, minResult, test
+	global eq, opsCnt, maxResult, minResult
 	eq.append(a[idx])
 	if idx >= n - 1:
 		result = calc(eq)
