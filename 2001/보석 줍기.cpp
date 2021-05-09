@@ -1,10 +1,7 @@
 #include <iostream>
 #include <vector>
-#include <cstring>
 #include <algorithm>
 using namespace std;
-
-const int INF = 0x3f3f3f3f;
 
 int hasJewelry[101];
 vector<vector<pair<int, int>>> adj;
