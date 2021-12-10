@@ -148,8 +148,8 @@ Matrix pow(Matrix &matrix, long e) {
 }
 
 Matrix pow(Matrix &matrix, long e, long mod) {
-    if (!e) return Matrix(IdentityMatrix(matrix.size()), mod);
-    Matrix half = pow(matrix, e / 2, mod);
+    if (!e) return IdentityMatrix(matrix.size());
+    Matrix half(pow(matrix, e / 2, mod), mod);
     return e & 1 ? half * half * matrix : half * half;
 }
 
