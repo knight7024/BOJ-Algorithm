@@ -28,11 +28,13 @@ int dfs(int nowNode, int bitDp) {
 	for (int i = 1; i < n; i++) {
 		// 연결된 길이 있다면
 		if (!(bitDp & 1 << i) && cost[nowNode][i]) {
-			result = min(result, dfs(i, bitDp | (1 << i)) + cost[nowNode][i]);
+			int innerResult = dfs(i, bitDp | (1 << i));
+			if (innerResult == -1) continue;
+			result = min(result, innerResult + cost[nowNode][i]);
 		}
 	}
 
-	return ret = result;
+	return ret = result == INF ? -1 : result;
 }
 
 int main() {
