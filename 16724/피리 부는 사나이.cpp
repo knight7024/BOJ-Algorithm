@@ -55,7 +55,7 @@ int main() {
 
     memset(parent, -1, sizeof(parent));
 
-    set<int> answer;
+    unordered_set<int> answer;
     for (int i = 0; i < n; i++) {
         for (int j = 0; j < m; j++) {
             if (parent[coor2num(i, j)] != -1) continue;
