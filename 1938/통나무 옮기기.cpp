@@ -1,6 +1,9 @@
 #include <bits/stdc++.h>
 using namespace std;
 
+const int dy[] {-1, 1, 0, 0};
+const int dx[] {0, 0, -1, 1};
+
 const int INF = 0x7f7f7f7f;
 
 struct Coor {
@@ -19,9 +22,10 @@ struct Info {
 
 int n;
 char board[51][51];
-auto canMove = [](Coor coor) -> bool {
+
+bool canMove(Coor coor) {
     return coor.y >= 0 and coor.y < n and coor.x >= 0 and coor.x < n and board[coor.y][coor.x] != '1';
-};
+}
 
 bool isValid(Coor& coor, bool isVertical) {
     if (isVertical) return canMove(coor) & canMove({coor.y - 1, coor.x}) & canMove({coor.y + 1, coor.x});
@@ -56,40 +60,19 @@ int main() {
         auto front = bfs.front();
         bfs.pop();
 
-        // 상
-        Coor nextCoor = {front.center.y - 1, front.center.x};
-        if (isValid(nextCoor, front.isVertical) and dp[nextCoor.y][nextCoor.x][front.isVertical] > front.moveCount + 1) {
-            bfs.emplace(nextCoor, front.isVertical, front.moveCount + 1);
-            dp[nextCoor.y][nextCoor.x][front.isVertical] = front.moveCount + 1;
+        for (int d = 0; d < 4; d++) {
+            Coor nextCoor = {front.center.y + dy[d], front.center.x + dx[d]};
+            if (isValid(nextCoor, front.isVertical) and dp[nextCoor.y][nextCoor.x][front.isVertical] > front.moveCount + 1) {
+                bfs.emplace(nextCoor, front.isVertical, front.moveCount + 1);
+                dp[nextCoor.y][nextCoor.x][front.isVertical] = front.moveCount + 1;
+            }
         }
         
-        // 하
-        nextCoor = {front.center.y + 1, front.center.x};
-        if (isValid(nextCoor, front.isVertical) and dp[nextCoor.y][nextCoor.x][front.isVertical] > front.moveCount + 1) {
-            bfs.emplace(nextCoor, front.isVertical, front.moveCount + 1);
-            dp[nextCoor.y][nextCoor.x][front.isVertical] = front.moveCount + 1;
-        }
-        
-        // 좌
-        nextCoor = {front.center.y, front.center.x - 1};
-        if (isValid(nextCoor, front.isVertical) and dp[nextCoor.y][nextCoor.x][front.isVertical] > front.moveCount + 1) {
-            bfs.emplace(nextCoor, front.isVertical, front.moveCount + 1);
-            dp[nextCoor.y][nextCoor.x][front.isVertical] = front.moveCount + 1;
-        }
-        
-        // 우
-        nextCoor = {front.center.y, front.center.x + 1};
-        if (isValid(nextCoor, front.isVertical) and dp[nextCoor.y][nextCoor.x][front.isVertical] > front.moveCount + 1) {
-            bfs.emplace(nextCoor, front.isVertical, front.moveCount + 1);
-            dp[nextCoor.y][nextCoor.x][front.isVertical] = front.moveCount + 1;
-        }
-        
-        // 회전
-        nextCoor = {front.center.y, front.center.x};
+        Coor nextCoor = {front.center.y, front.center.x};
         bool canTurn = true;
         for (int y = nextCoor.y - 1; y <= nextCoor.y + 1; y++) {
             for (int x = nextCoor.x - 1; x <= nextCoor.x + 1; x++) {
-                if (y < 0 or y >= n or x < 0 or x >= n or board[y][x] == '1') {
+                if (!canMove({y, x})) {
                     canTurn = false;
                     break;
                 }
