@@ -2,63 +2,15 @@
 #define endl '\n'
 using namespace std;
 
-string num2Str[] = {
-    "ZERO",
-    "ONE",
-    "TWO",
-    "THREE",
-    "FOUR",
-    "FIVE",
-    "SIX",
-    "SEVEN",
-    "EIGHT",
-    "NINE"
+const long MAX = 1e15;
+
+unordered_map<string, string> numTable {
+    {"ONE", "1"}, {"TWO", "2"}, {"THREE", "3"}, {"FOUR", "4"}, {"FIVE", "5"},
+    {"SIX", "6"}, {"SEVEN", "7"}, {"EIGHT", "8"}, {"NINE", "9"}, {"ZERO", "0"},
 };
-string ops = "+-x/=";
-
-string calculate(string& convert) {
-    int n = convert.size();
-    long result = 0;
-    int opsType = 0;
-    for (int i = 0; i < n; i++) {
-        long num = 0;
-        while (i < n && isdigit(convert[i])) {
-            num = num * 10 + (convert[i] - '0');
-            i++;
-        }
-
-        switch (opsType) {
-            case 0:
-            result += num;
-            break;
-            
-            case 1:
-            result -= num;
-            break;
-
-            case 2:
-            result *= num;
-            break;
-
-            case 3:
-            result /= num;
-            break;
-        }
-
-        opsType = ops.find(convert[i]);
-    }
-
-    bool minusFlag = false;
-    string ret;
-    if (result < 0) minusFlag = true, result *= -1;
-    else if (!result) return "ZERO";
-    while (result) {
-        ret = num2Str[result % 10] + ret;
-        result /= 10;
-    }
-
-    return minusFlag ? "-" + ret : ret;
-}
+string strTable[] {
+    "ZERO", "ONE", "TWO", "THREE", "FOUR", "FIVE", "SIX", "SEVEN", "EIGHT", "NINE",
+};
 
 int main() {
     cin.tie(0)->sync_with_stdio(0);
@@ -66,169 +18,70 @@ int main() {
     string s;
     cin >> s;
 
-    int n = s.size();
-    string convert;
-    for (int i = 0; s[i]; i++) {
-        if (s[i] == 'Z') {
-            bool isValid = true;
-            for (int j = 0; num2Str[0][j]; j++) {
-                if (i + j >= n || s[i + j] != num2Str[0][j]) {
-                    isValid = false;
-                    break;
-                }
-            }
-            if (!isValid) {
+    string eq; string w;
+    for (char& c : s) {
+        if (!isupper(c)) {
+            if (!w.empty()) {
                 cout << "Madness!";
-                exit(0);
+                return 0;
             }
-            convert.push_back('0');
-            i += num2Str[0].size() - 1;
+            eq += c;
+            continue;
         }
-        else if (s[i] == 'O') {
-            bool isValid = true;
-            for (int j = 0; num2Str[1][j]; j++) {
-                if (i + j >= n || s[i + j] != num2Str[1][j]) {
-                    isValid = false;
-                    break;
-                }
-            }
-            if (!isValid) {
-                cout << "Madness!";
-                exit(0);
-            }
-            convert.push_back('1');
-            i += num2Str[1].size() - 1;
-        }
-        else if (s[i] == 'T') {
-            bool isValid = true;
-            for (int j = 0; num2Str[2][j]; j++) {
-                if (i + j >= n || s[i + j] != num2Str[2][j]) {
-                    isValid = false;
-                    break;
-                }
-            }
-            if (isValid) {
-                convert.push_back('2');
-                i += num2Str[2].size() - 1;
-                continue;
-            }
-
-            isValid = true;
-            for (int j = 0; num2Str[3][j]; j++) {
-                if (i + j >= n || s[i + j] != num2Str[3][j]) {
-                    isValid = false;
-                    break;
-                }
-            }
-            if (isValid) {
-                convert.push_back('3');
-                i += num2Str[3].size() - 1;
-                continue;
-            }
-
-            cout << "Madness!";
-            exit(0);
-        }
-        else if (s[i] == 'F') {
-            bool isValid = true;
-            for (int j = 0; num2Str[4][j]; j++) {
-                if (i + j >= n || s[i + j] != num2Str[4][j]) {
-                    isValid = false;
-                    break;
-                }
-            }
-            if (isValid) {
-                convert.push_back('4');
-                i += num2Str[4].size() - 1;
-                continue;
-            }
-
-            isValid = true;
-            for (int j = 0; num2Str[5][j]; j++) {
-                if (i + j >= n || s[i + j] != num2Str[5][j]) {
-                    isValid = false;
-                    break;
-                }
-            }
-            if (isValid) {
-                convert.push_back('5');
-                i += num2Str[5].size() - 1;
-                continue;
-            }
-
-            cout << "Madness!";
-            exit(0);
-        }
-        else if (s[i] == 'S') {
-            bool isValid = true;
-            for (int j = 0; num2Str[6][j]; j++) {
-                if (i + j >= n || s[i + j] != num2Str[6][j]) {
-                    isValid = false;
-                    break;
-                }
-            }
-            if (isValid) {
-                convert.push_back('6');
-                i += num2Str[6].size() - 1;
-                continue;
-            }
-
-            isValid = true;
-            for (int j = 0; num2Str[7][j]; j++) {
-                if (i + j >= n || s[i + j] != num2Str[7][j]) {
-                    isValid = false;
-                    break;
-                }
-            }
-            if (isValid) {
-                convert.push_back('7');
-                i += num2Str[7].size() - 1;
-                continue;
-            }
-
-            cout << "Madness!";
-            exit(0);
-        }
-        else if (s[i] == 'E') {
-            bool isValid = true;
-            for (int j = 0; num2Str[8][j]; j++) {
-                if (i + j >= n || s[i + j] != num2Str[8][j]) {
-                    isValid = false;
-                    break;
-                }
-            }
-            if (!isValid) {
-                cout << "Madness!";
-                exit(0);
-            }
-            convert.push_back('8');
-            i += num2Str[8].size() - 1;
-        }
-        else if (s[i] == 'N') {
-            bool isValid = true;
-            for (int j = 0; num2Str[9][j]; j++) {
-                if (i + j >= n || s[i + j] != num2Str[9][j]) {
-                    isValid = false;
-                    break;
-                }
-            }
-            if (!isValid) {
-                cout << "Madness!";
-                exit(0);
-            }
-            convert.push_back('9');
-            i += num2Str[9].size() - 1;
-        }
-        else {
-            if (ops.find(s[i]) == string::npos || ops.find(convert.back()) != string::npos) {
-                cout << "Madness!";
-                exit(0);
-            }
-            convert.push_back(s[i]);
-        }
+        w += c;
+        if (!numTable.count(w)) continue;
+        eq += numTable[w];
+        w.clear();
     }
 
-    cout << convert << endl << calculate(convert);
+    auto eq2Num = [&](string& eq) -> long {
+        long ret = 0; long src = 0;
+        char op = -1;
+        for (int i = 0; eq[i]; i++) {
+            if (isupper(eq[i])) return MAX + 1;
+            if (isdigit(eq[i])) {
+                src = src * 10 + (eq[i] - '0');
+                continue;
+            }
+            if (!isdigit(eq[i - 1])) return MAX + 1;
 
+            if (op == '+') ret += src;
+            else if (op == '-') ret -= src;
+            else if (op == 'x') ret *= src;
+            else if (op == '/') ret /= src;
+            else ret = src;
+            src = 0;
+            op = eq[i];
+        }
+        
+        return ret;
+    };
+    
+    long result = eq2Num(eq);
+    if (result > MAX) {
+        cout << "Madness!";
+        return 0;
+    }
+    
+    cout << eq << endl;
+    if (result < 0) {
+        cout << '-';
+        result *= -1;
+    }
+    else if (!result) {
+        cout << "ZERO";
+        return 0;
+    }
+
+    stack<string> numStr;
+    while (result) {
+        numStr.push(strTable[result % 10]);
+        result /= 10;
+    }
+    while (!numStr.empty()) {
+        cout << numStr.top();
+        numStr.pop();
+    }
+    
     return 0;
 }
