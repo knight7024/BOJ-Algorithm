@@ -1,4 +1,5 @@
 #include <bits/stdc++.h>
+#define endl '\n'
 using namespace std;
 
 const int INF = 0x7f7f7f7f;
