@@ -15,14 +15,8 @@ int getParent(int x) {
 void unionParent(int a, int b, int w) {
     int aParent = getParent(a);
     int bParent = getParent(b);
-    if (w >= 0) {
-        parent[aParent] = bParent;
-        weightByParent[aParent] = weightByParent[b] + w - weightByParent[a];
-    }
-    else {
-        parent[bParent] = aParent;
-        weightByParent[bParent] = weightByParent[a] + w - weightByParent[b];
-    }
+    parent[aParent] = bParent;
+    weightByParent[aParent] = weightByParent[b] + w - weightByParent[a];
 }
 
 int main() {
@@ -44,9 +38,7 @@ int main() {
                 unionParent(a, b, w);
             }
             else {
-                int aParent = getParent(a);
-                int bParent = getParent(b);
-                if (aParent != bParent) {
+                if (getParent(a) != getParent(b)) {
                     cout << "UNKNOWN" << endl;
                     continue;
                 }
